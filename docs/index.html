@@ -6,7 +6,7 @@
 <title>Sippy 💧 — a very cute water reminder</title>
 <meta name="description" content="Sippy is a tiny Android app that does one thing: remind you to drink water.">
 <meta property="og:title" content="Sippy 💧">
-<meta property="og:description" content="Someone wants you to drink more water.">
+<meta property="og:description" content="Wahab wants you to drink more water.">
 <style>
   :root {
     --bg-top: #f2faff;
@@ -187,7 +187,7 @@
     <path d="M72 148 Q84 160 96 148" fill="none" stroke="#0c4a6e" stroke-width="5" stroke-linecap="round"/>
   </svg>
 
-  <h1 id="headline">Someone wants you to drink water 💧</h1>
+  <h1 id="headline">Wahab wants you to drink water 💧</h1>
   <p class="sub" id="subline">
     This is Sippy. It does exactly one thing: it nudges you to have a glass of water,
     and it looks very pleased with you when you do.
@@ -206,7 +206,7 @@
     </ol>
   </div>
 
-  <div class="card">
+  <div class="card" id="sendCard">
     <h2>Send Sippy to a friend</h2>
     <div class="field">
       <input type="text" id="nameInput" placeholder="their name" maxlength="24" autocomplete="off">
@@ -238,12 +238,15 @@
     document.title = "Sippy 💧 for " + name;
     document.getElementById("headline").textContent = "Hi " + name + "! 💧";
     document.getElementById("subline").textContent =
-      "Someone thinks you should drink more water, and sent you a tiny app about it. " +
+      "Wahab thinks you should drink more water, and sent you a tiny app about it. " +
       "Sippy does one thing: it nudges you to have a glass, then looks very pleased with you.";
 
     var open = document.getElementById("openApp");
     open.href = "sippy://hi?name=" + encodeURIComponent(name);
     open.style.display = "block";
+
+    // Friend invite links are personal — hide the link builder.
+    document.getElementById("sendCard").style.display = "none";
   } else {
     document.getElementById("step3").textContent = "Open Sippy and tell it your name. That's the whole setup.";
   }
