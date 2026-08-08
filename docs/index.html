@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sippy 💧 — a very cute water reminder</title>
+<meta name="description" content="Sippy is a tiny Android app that does one thing: remind you to drink water.">
+<meta property="og:title" content="Sippy 💧">
+<meta property="og:description" content="Someone wants you to drink more water.">
+<style>
+  :root {
+    --bg-top: #f2faff;
+    --bg-bottom: #dcf1fe;
+    --ink: #0c4a6e;
+    --ink-soft: #3e6e88;
+    --card: #ffffff;
+    --water-light: #7dd3fc;
+    --water-mid: #38bdf8;
+    --water-deep: #0284c7;
+    --blush: #fda4af;
+    --outline: #b6dcf0;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-top: #07202e;
+      --bg-bottom: #0b3a52;
+      --ink: #dcf1fe;
+      --ink-soft: #a5d6ef;
+      --card: #0c2c3e;
+      --outline: #1e5877;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 40px 20px 64px;
+    background: linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+    color: var(--ink);
+    font-family: ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, -apple-system, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .wrap { width: 100%; max-width: 460px; }
+
+  /* Sippy bobs gently, the same way it does inside the app. */
+  .mascot { width: 168px; height: 200px; animation: bob 3.2s ease-in-out infinite; }
+  @keyframes bob { 0%, 100% { transform: translateY(-6px); } 50% { transform: translateY(6px); } }
+
+  .wave { animation: slosh 3.6s ease-in-out infinite; transform-origin: center; }
+  @keyframes slosh { 0%, 100% { transform: translateX(-6px); } 50% { transform: translateX(6px); } }
+
+  h1 {
+    font-size: clamp(30px, 9vw, 42px);
+    line-height: 1.12;
+    margin: 18px 0 8px;
+    letter-spacing: -0.5px;
+  }
+
+  .sub { font-size: 17px; color: var(--ink-soft); margin: 0 0 28px; line-height: 1.5; }
+
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 18px 20px;
+    border: none;
+    border-radius: 999px;
+    background: var(--water-mid);
+    color: #fff;
+    font: inherit;
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(56, 189, 248, 0.35);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .btn:active { transform: scale(0.96); box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3); }
+  .btn.ghost {
+    background: transparent;
+    color: var(--water-deep);
+    border: 2px solid var(--outline);
+    box-shadow: none;
+    margin-top: 12px;
+  }
+  @media (prefers-color-scheme: dark) { .btn.ghost { color: var(--water-light); } }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--outline);
+    border-radius: 22px;
+    padding: 22px;
+    margin-top: 28px;
+    text-align: left;
+  }
+  .card h2 { font-size: 16px; margin: 0 0 14px; letter-spacing: 0.3px; text-transform: uppercase; color: var(--ink-soft); }
+
+  ol { margin: 0; padding-left: 20px; color: var(--ink-soft); font-size: 15px; line-height: 1.75; }
+  ol strong { color: var(--ink); }
+
+  .field {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  input[type="text"] {
+    flex: 1;
+    min-width: 0;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 2px solid var(--outline);
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+    font-size: 16px;
+  }
+  input[type="text"]:focus { outline: none; border-color: var(--water-mid); }
+
+  .mini {
+    padding: 14px 18px;
+    border-radius: 14px;
+    border: none;
+    background: var(--water-deep);
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .out {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba(125, 211, 252, 0.16);
+    color: var(--ink-soft);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 13px;
+    word-break: break-all;
+    display: none;
+  }
+  .out.show { display: block; }
+
+  footer { margin-top: 34px; font-size: 13px; color: var(--ink-soft); line-height: 1.7; }
+  a { color: var(--water-deep); }
+  @media (prefers-color-scheme: dark) { a { color: var(--water-light); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <svg class="mascot" viewBox="0 0 168 200" role="img" aria-label="Sippy, a smiling water droplet">
+    <defs>
+      <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#7dd3fc"/>
+        <stop offset="100%" stop-color="#0284c7"/>
+      </linearGradient>
+      <clipPath id="dropClip">
+        <path d="M84 12 C84 12 24 92 24 132 a60 60 0 0 0 120 0 C144 92 84 12 84 12 Z"/>
+      </clipPath>
+    </defs>
+
+    <path d="M84 12 C84 12 24 92 24 132 a60 60 0 0 0 120 0 C144 92 84 12 84 12 Z"
+          fill="#ffffff" fill-opacity="0.55"/>
+
+    <g clip-path="url(#dropClip)">
+      <path class="wave"
+            d="M-30 118 q 30 -12 60 0 t 60 0 t 60 0 t 60 0 V 210 H -30 Z"
+            fill="url(#water)"/>
+    </g>
+
+    <path d="M84 12 C84 12 24 92 24 132 a60 60 0 0 0 120 0 C144 92 84 12 84 12 Z"
+          fill="none" stroke="#0284c7" stroke-opacity="0.35" stroke-width="3"/>
+
+    <circle cx="63" cy="128" r="7" fill="#0c4a6e"/>
+    <circle cx="105" cy="128" r="7" fill="#0c4a6e"/>
+    <circle cx="65.5" cy="125.5" r="2.4" fill="#fff" fill-opacity="0.9"/>
+    <circle cx="107.5" cy="125.5" r="2.4" fill="#fff" fill-opacity="0.9"/>
+    <circle cx="47" cy="145" r="9" fill="#fda4af" fill-opacity="0.55"/>
+    <circle cx="121" cy="145" r="9" fill="#fda4af" fill-opacity="0.55"/>
+    <path d="M72 148 Q84 160 96 148" fill="none" stroke="#0c4a6e" stroke-width="5" stroke-linecap="round"/>
+  </svg>
+
+  <h1 id="headline">Someone wants you to drink water 💧</h1>
+  <p class="sub" id="subline">
+    This is Sippy. It does exactly one thing: it nudges you to have a glass of water,
+    and it looks very pleased with you when you do.
+  </p>
+
+  <a class="btn" id="download" href="#">Download Sippy for Android</a>
+  <a class="btn ghost" id="openApp" href="#" style="display:none">Already installed? Open it →</a>
+
+  <div class="card">
+    <h2>How to install</h2>
+    <ol>
+      <li>Tap <strong>Download Sippy for Android</strong> above.</li>
+      <li>Open the downloaded <strong>.apk</strong>. Android will ask if you trust
+          this source — say yes (it only asks once).</li>
+      <li id="step3">Come back here and tap <strong>Open it</strong> so Sippy knows your name.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>Send Sippy to a friend</h2>
+    <div class="field">
+      <input type="text" id="nameInput" placeholder="their name" maxlength="24" autocomplete="off">
+      <button class="mini" id="makeLink">Make link</button>
+    </div>
+    <div class="out" id="linkOut"></div>
+  </div>
+
+  <footer>
+    No account, no sign-up, no internet permission — Sippy has no way to phone home.<br>
+    Everything it knows stays on the phone.
+  </footer>
+</div>
+
+<script>
+(function () {
+  // GitHub always serves the newest release asset from this stable path.
+  var APK_URL = "https://github.com/wahabshaikh/water-reminder/releases/latest/download/sippy.apk";
+
+  var params = new URLSearchParams(location.search);
+  var rawName = (params.get("name") || params.get("for") || "").trim().slice(0, 24);
+  // The name is echoed into the page, so it goes in as text, never as HTML.
+  var name = rawName.replace(/[<>]/g, "");
+
+  var download = document.getElementById("download");
+  download.href = APK_URL;
+
+  if (name) {
+    document.title = "Sippy 💧 for " + name;
+    document.getElementById("headline").textContent = "Hi " + name + "! 💧";
+    document.getElementById("subline").textContent =
+      "Someone thinks you should drink more water, and sent you a tiny app about it. " +
+      "Sippy does one thing: it nudges you to have a glass, then looks very pleased with you.";
+
+    var open = document.getElementById("openApp");
+    open.href = "sippy://hi?name=" + encodeURIComponent(name);
+    open.style.display = "block";
+  } else {
+    document.getElementById("step3").textContent = "Open Sippy and tell it your name. That's the whole setup.";
+  }
+
+  // Link builder: whatever URL this page is on, plus ?name=
+  var input = document.getElementById("nameInput");
+  var out = document.getElementById("linkOut");
+
+  function buildLink() {
+    var friend = input.value.trim();
+    if (!friend) {
+      out.className = "out";
+      return;
+    }
+    var link = location.origin + location.pathname + "?name=" + encodeURIComponent(friend);
+    out.textContent = link;
+    out.className = "out show";
+
+    if (navigator.share) {
+      navigator.share({ title: "Sippy 💧", text: "drink water, " + friend + " 💧", url: link })
+        .catch(function () { /* dismissed — the link is on screen to copy anyway */ });
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(link).then(function () {
+        out.textContent = link + "\n\n✓ copied!";
+      }).catch(function () { /* the link is on screen to copy by hand */ });
+    }
+  }
+
+  document.getElementById("makeLink").addEventListener("click", buildLink);
+  input.addEventListener("keydown", function (e) { if (e.key === "Enter") buildLink(); });
+})();
+</script>
+</body>
+</html>

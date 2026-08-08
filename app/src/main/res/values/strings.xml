@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sippy</string>
+
+    <string name="channel_name">Water nudges</string>
+    <string name="channel_description">Gentle reminders to drink some water.</string>
+
+    <string name="drank_a_glass">I drank a glass 🥤</string>
+    <string name="action_drank">I drank it ✨</string>
+    <string name="undo">oops, undo that</string>
+
+    <string name="onboarding_title">hi! I\'m Sippy 💧</string>
+    <string name="onboarding_subtitle">I do exactly one thing: remind you to drink water. What should I call you?</string>
+    <string name="onboarding_placeholder">your name</string>
+    <string name="onboarding_cta">let\'s go!</string>
+    <string name="onboarding_skip">skip for now</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_name">Your name</string>
+    <string name="settings_goal">Daily goal</string>
+    <string name="settings_interval">Nudge me</string>
+    <string name="settings_start">Start the day</string>
+    <string name="settings_end">Wind down</string>
+    <string name="settings_footnote">Sippy never uses the internet. Everything stays on this phone.</string>
+</resources>

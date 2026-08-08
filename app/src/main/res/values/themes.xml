@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Compose paints the whole UI; this theme only needs to hand it an
+         edge-to-edge window that does not flash white on a dark phone. -->
+    <style name="Theme.Sippy" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/sippy_background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>

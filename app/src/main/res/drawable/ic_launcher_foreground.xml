@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Adaptive icon foreground. The droplet is kept inside the 72dp safe zone of
+     the 108dp canvas so no launcher mask clips Sippy's face. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <path
+        android:pathData="M54,24 C54,24 30,52 30,66 A24,24 0 0,0 78,66 C78,52 54,24 54,24 Z">
+        <aapt:attr xmlns:aapt="http://schemas.android.com/aapt" name="android:fillColor">
+            <gradient
+                android:startY="24"
+                android:endY="90"
+                android:type="linear">
+                <item android:offset="0" android:color="#FF7DD3FC" />
+                <item android:offset="1" android:color="#FF0284C7" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Eyes -->
+    <path
+        android:fillColor="#FF0C4A6E"
+        android:pathData="M45,64 m-4,0 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0" />
+    <path
+        android:fillColor="#FF0C4A6E"
+        android:pathData="M63,64 m-4,0 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0" />
+
+    <!-- Blush -->
+    <path
+        android:fillColor="#66FDA4AF"
+        android:pathData="M37,73 m-5,0 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0" />
+    <path
+        android:fillColor="#66FDA4AF"
+        android:pathData="M71,73 m-5,0 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0" />
+
+    <!-- Smile -->
+    <path
+        android:strokeColor="#FF0C4A6E"
+        android:strokeWidth="3.5"
+        android:strokeLineCap="round"
+        android:pathData="M48,74 Q54,80 60,74" />
+</vector>
