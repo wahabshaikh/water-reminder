@@ -202,7 +202,8 @@
       <li>Tap <strong>Download Sippy for Android</strong> above.</li>
       <li>Open the downloaded <strong>.apk</strong>. Android will ask if you trust
           this source — say yes (it only asks once).</li>
-      <li id="step3">Come back here and tap <strong>Open it</strong> so Sippy knows your name.</li>
+      <li id="step3">Open Sippy. It'll ask your name and remember it — or come back
+          here and tap <strong>Open it</strong> to skip the typing.</li>
     </ol>
   </div>
 
@@ -245,7 +246,8 @@
     open.href = "sippy://hi?name=" + encodeURIComponent(name);
     open.style.display = "block";
   } else {
-    document.getElementById("step3").textContent = "Open Sippy and tell it your name. That's the whole setup.";
+    document.getElementById("step3").textContent =
+      "Open Sippy. It'll ask your name and remember it. That's the whole setup.";
   }
 
   // Link builder: whatever URL this page is on, plus ?name=
